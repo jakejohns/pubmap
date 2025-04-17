@@ -1,0 +1,53 @@
+@media print {
+  :root {
+    --fg: #000;
+    --bg: #fff;
+    --transbg: #ffffff7d;
+    --transfg: #0000007d;
+    --stripe: #ddd;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  html {
+    font-size: 10pt;
+  }
+
+  section {
+    break-inside: avoid;
+    padding: 0.25em;
+  }
+
+  .map {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .spread {
+    width: 50%;
+  }
+
+  .flat {
+    break-inside: avoid;
+    min-height: 26vw;
+  }
+
+  table {
+    break-inside: avoid;
+  }
+
+  .search-input,
+  .clear-btn,
+  .toggle-btn {
+    display: none;
+  }
+}
+
+@media only print and (min-width: 9in) {
+  html {
+    font-size: 14pt;
+  }
+}

@@ -1,0 +1,16 @@
+:root {
+  --fg: #fff;
+  --bg: #111;
+  --transbg: #0000007d;
+  --transfg: #ffffff7d;
+  --stripe: #333;
+  --flash: #f0f;
+}
+
+.light-theme {
+  --fg: #000;
+  --bg: #fff;
+  --transbg: #ffffff7d;
+  --transfg: #0000007d;
+  --stripe: #ddd;
+}

@@ -1,0 +1,44 @@
+<section class="ee-section">
+  <h2>§ {NAME} :: Elements & Estimates</h2>
+  <div class="ee-tables">
+    <div class="ee-articles">
+      <table id="article-table" class="article-table">
+        <thead>
+          <tr>
+            <th class="article">Article</th>
+            <th class="flats">Flat #(s)</th>
+            <th class="manuscript">
+              <abbr title="Manuscript Pages/Flat"
+                >MS@<strong>{MPF}</strong>/f</abbr
+              >
+            </th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            {ARTICLE_FOOT}
+          </tr>
+        </tfoot>
+        <tbody>
+          {ARTICLES}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ee-extras">
+      <table id="extra-table" class="extra-table">
+        <thead>
+          <tr>
+            <th>Ad/Extra</th>
+            <th>Flat #</th>
+            <th>Desc/Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {EXTRAS}
+        </tbody>
+      </table>
+    </div>
+    <div class="notes">{NOTES}</div>
+  </div>
+</section>

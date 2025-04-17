@@ -1,0 +1,209 @@
+#!/usr/bin/env bash
+
+PUBMAP_CFG=${PUBMAP_CFG:-pubmap.cfg}
+
+show_help() {
+    self=${0##*/}
+    cat << EOH
+USAGE: $self
+
+EOH
+}
+
+die() { printf '%s\n' "$*" >&2; exit 1; }
+info() { printf '%s\n' "$*" >&2; }
+
+load_env() {
+    local -r env="$1"
+    local key value
+    if [[ -f "$env" ]]; then
+        while IFS='=' read -r key value; do
+            key=$(printf "%s" "$key" | xargs)
+            value=$(printf "%s" "$value" | xargs)
+            [[ -z "$key" || "$key" =~ ^# ]] && continue
+            [[ "$key" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]] || die "Invalid variable name: $key"
+            export "$key=$value"
+        done < "$env"
+    fi
+}
+
+[[ -f "$PUBMAP_CFG" ]] && load_env "$PUBMAP_CFG"
+
+XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
+PUBMAP_DATA_HOME=${PUBMAP_DATA_HOME:-$XDG_DATA_HOME/pubmap}
+
+PUBMAP_DATA_AWK=${PUBMAP_DATA_AWK:-$PUBMAP_DATA_HOME/data.awk}
+PUBMAP_MAP_AWK=${PUBMAP_MAP_AWK:-$PUBMAP_DATA_HOME/map.awk}
+PUBMAP_EE_AWK=${PUBMAP_EE_AWK:-$PUBMAP_DATA_HOME/ee.awk}
+PUBMAP_BEV_AWK=${PUBMAP_BEV_AWK:-$PUBMAP_DATA_HOME/bev.awk}
+PUBMAP_CSS_AWK=${PUBMAP_CSS_AWK:-$PUBMAP_DATA_HOME/css.awk}
+PUBMAP_NOTES_AWK=${PUBMAP_NOTES_AWK:-$PUBMAP_DATA_HOME/notes.awk}
+PUBMAP_LAYOUT_AWK=${PUBMAP_LAYOUT_AWK:-$PUBMAP_DATA_HOME/layout.awk}
+
+PUBMAP_COLORS=${PUBMAP_COLORS:-$PUBMAP_DATA_HOME/colors}
+
+PUBMAP_STYLE=${PUBMAP_TEMPLATES:-$PUBMAP_DATA_HOME/css}
+PUBMAP_TEMPLATES=${PUBMAP_TEMPLATES:-$PUBMAP_DATA_HOME/html}
+PUBMAP_LAYOUT=${PUBMAP_LAYOUT:-$PUBMAP_TEMPLATES/layout.html}
+
+MPF="${MPF:-6}"
+
+POSIX=""
+[[ -n $POSIX_ME_HARDER ]] && POSIX="--posix"
+
+DATA=""
+NOTES=""
+load()
+{
+    local -r input="$(cat)"
+    DATA=$(get_data <<< "$input")
+    NOTES=$(get_notes <<< "$input")
+}
+
+get_data()
+{
+    local -r data_opt=(
+        "$POSIX"
+        -f "$PUBMAP_DATA_AWK"
+        -v MPF="$MPF"
+    )
+    awk "${data_opt[@]}" <<< "$input"
+}
+
+get_notes()
+{
+    local -r notes_opt=(
+        "$POSIX"
+        -f "$PUBMAP_NOTES_AWK"
+    )
+
+    awk "${notes_opt[@]}"
+}
+
+get_map() {
+    local -r map_opt=(
+        "$POSIX"
+        -v "TEMPLATE_DIR=$PUBMAP_TEMPLATES"
+        -f "$PUBMAP_MAP_AWK"
+    )
+    awk "${map_opt[@]}"
+}
+
+get_ee() {
+    local -r ee_opt=(
+        "$POSIX"
+        -v "TEMPLATE_DIR=$PUBMAP_TEMPLATES"
+        -f "$PUBMAP_EE_AWK"
+        -v MPF="$MPF"
+    )
+    awk "${ee_opt[@]}"
+}
+
+get_bev() {
+    local -r bev_opt=(
+        "$POSIX"
+        -v "TEMPLATE_DIR=$PUBMAP_TEMPLATES"
+        -f "$PUBMAP_BEV_AWK"
+    )
+    awk "${bev_opt[@]}"
+}
+
+get_css() {
+    local -r css_opt=(
+        "$POSIX"
+        -f "$PUBMAP_CSS_AWK"
+    )
+    awk "${css_opt[@]}" - "$PUBMAP_STYLE"/*.css  < "$PUBMAP_COLORS"
+}
+
+get_js() {
+    printf '<script>'
+    cat "$PUBMAP_DATA_HOME"/js/*.js
+    printf '</script>'
+}
+
+# NO NEW LINES ... escape em cuz posix wont take em
+nnl() { awk '{printf "%s\\n", $0}'; }
+
+layout() {
+    local -r main="$1"
+    local -r layout_opt=(
+        "$POSIX"
+        -f "$PUBMAP_LAYOUT_AWK"
+        -v "NAME=$NAME"
+        -v "DATE=$(date +%F)"
+        -v "REVISION=$(date --iso-8601=seconds)"
+        -v "NOTES=$(nnl <<< "$NOTES")"
+        -v "CSS=$(get_css | nnl)"
+        -v "JS=$(get_js | nnl)"
+        -v "MAIN=$(nnl <<< "$main")"
+    )
+    awk "${layout_opt[@]}" < "$PUBMAP_LAYOUT"
+}
+
+DUMP=false
+PRINT_MAP=${PUBMAP_PRINT_MAP:-true}
+PRINT_EE=${PUBMAP_PRINT_EE:-true}
+PRINT_BEV=${PUBMAP_PRINT_BEV:-true}
+output() {
+    if [[ "$DUMP" == true ]]; then info "$DATA"; exit ; fi
+
+    local main
+    [[ "$PRINT_MAP" == true ]] && main="$main $(get_map <<< "$DATA")"
+    [[ "$PRINT_EE"  == true ]] && main="$main $(get_ee  <<< "$DATA")"
+    [[ "$PRINT_BEV" == true ]] && main="$main $(get_bev <<< "$DATA")"
+
+    layout "$main"
+}
+
+while :; do
+    case $1 in
+        -h|-\?|--help) show_help; exit; ;;
+        -v|--verbose) verbose=$((verbose + 1)) ;;
+        -d|--dump) DUMP=true; ;;
+
+        --no-map) PRINT_MAP=false; ;;
+        --no-ee) PRINT_EE=false; ;;
+        --no-bev) PRINT_BEV=false; ;;
+
+        -m|--mpf)
+            if [ "$2" ]; then MPF=$2; shift;
+            else die 'ERROR: "--mpf" requires a non-empty argument.' ;
+            fi
+            ;;
+        --mpf=?*) MPF=${1#*=}; ;;
+        --mpf=) die 'ERROR: "--mpf" requires a non-empty argument.'; ;;
+
+        -n|--name)
+            if [ "$2" ]; then NAME=$2; shift;
+            else die 'ERROR: "--name" requires a non-empty argument.' ;
+            fi
+            ;;
+        --name=?*) NAME=${1#*=}; ;;
+        --name=) die 'ERROR: "--name" requires a non-empty argument.'; ;;
+
+        --) shift; break; ;;
+        -?*) printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2; ;;
+        *) break ;;
+    esac
+    shift
+done
+
+if [[ -t 0 ]]; then
+    csv=$1
+    [[ -n $csv ]] || csv=${PUBMAP_CSV:-"pubmap.csv"}
+    if [[ -f $csv ]]; then
+        [[ -n "$NAME" ]] || NAME="$(basename "$csv")"
+
+        if [[ -n "$PUBMAP_OUTPUT" ]]; then
+            [[ -f "$PUBMAP_OUTPUT" ]] && cp --interactive "$PUBMAP_OUTPUT" "$PUBMAP_OUTPUT.bak"
+            load < "$csv" && output > "$PUBMAP_OUTPUT"; exit
+        else
+            output < "$csv" ; exit
+        fi
+    else
+        die "No pubmap.csv"
+    fi
+else
+    load && output
+fi
