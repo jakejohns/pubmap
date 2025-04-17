@@ -132,7 +132,7 @@ layout() {
         -f "$PUBMAP_LAYOUT_AWK"
         -v "NAME=$NAME"
         -v "DATE=$(date +%F)"
-        -v "REVISION=$(date --iso-8601=seconds)"
+        -v "REVISION=$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
         -v "NOTES=$(nnl <<< "$NOTES")"
         -v "CSS=$(get_css | nnl)"
         -v "JS=$(get_js | nnl)"
