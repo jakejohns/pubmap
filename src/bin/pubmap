@@ -46,10 +46,8 @@ PUBMAP_STYLE=${PUBMAP_TEMPLATES:-$PUBMAP_DATA_HOME/css}
 PUBMAP_TEMPLATES=${PUBMAP_TEMPLATES:-$PUBMAP_DATA_HOME/html}
 PUBMAP_LAYOUT=${PUBMAP_LAYOUT:-$PUBMAP_TEMPLATES/layout.html}
 
+# Manuscript pages per flat estimate (approx.)
 MPF="${MPF:-6}"
-
-POSIX=""
-[[ -n $POSIX_ME_HARDER ]] && POSIX="--posix"
 
 DATA=""
 NOTES=""
@@ -60,75 +58,42 @@ load()
     NOTES=$(get_notes <<< "$input")
 }
 
-get_data()
-{
-    local -r data_opt=(
-        "$POSIX"
-        -f "$PUBMAP_DATA_AWK"
-        -v MPF="$MPF"
-    )
-    awk "${data_opt[@]}" <<< "$input"
-}
+###
+## From csv...
+# expand flat designation csv into element defs tsv
+get_data() { awk  -f "$PUBMAP_DATA_AWK" -v MPF="$MPF"; }
 
-get_notes()
-{
-    local -r notes_opt=(
-        "$POSIX"
-        -f "$PUBMAP_NOTES_AWK"
-    )
+# minimal markdown expansion after ^###$ line
+get_notes() { awk  -f "$PUBMAP_NOTES_AWK"; }
+###
 
-    awk "${notes_opt[@]}"
-}
 
-get_map() {
-    local -r map_opt=(
-        "$POSIX"
-        -v "TEMPLATE_DIR=$PUBMAP_TEMPLATES"
-        -f "$PUBMAP_MAP_AWK"
-    )
-    awk "${map_opt[@]}"
-}
+###
+## From data...
+# data-heavy anchors to style as visual representation
+get_map() { awk -f "$PUBMAP_MAP_AWK" -v "TEMPLATE_DIR=$PUBMAP_TEMPLATES"; }
 
-get_ee() {
-    local -r ee_opt=(
-        "$POSIX"
-        -v "TEMPLATE_DIR=$PUBMAP_TEMPLATES"
-        -f "$PUBMAP_EE_AWK"
-        -v MPF="$MPF"
-    )
-    awk "${ee_opt[@]}"
-}
+# elements and estimates tables (and notes)
+get_ee() { awk  -f "$PUBMAP_EE_AWK" -v "TEMPLATE_DIR=$PUBMAP_TEMPLATES" -v MPF="$MPF"; }
 
-get_bev() {
-    local -r bev_opt=(
-        "$POSIX"
-        -v "TEMPLATE_DIR=$PUBMAP_TEMPLATES"
-        -f "$PUBMAP_BEV_AWK"
-    )
-    awk "${bev_opt[@]}"
-}
+# birdseye view tracking chart
+get_bev() { awk -f "$PUBMAP_BEV_AWK" -v "TEMPLATE_DIR=$PUBMAP_TEMPLATES" ; }
+###
 
-get_css() {
-    local -r css_opt=(
-        "$POSIX"
-        -f "$PUBMAP_CSS_AWK"
-    )
-    awk "${css_opt[@]}" - "$PUBMAP_STYLE"/*.css  < "$PUBMAP_COLORS"
-}
-
+# Display assets
+get_css() { awk -f "$PUBMAP_CSS_AWK" - "$PUBMAP_STYLE"/*.css < "$PUBMAP_COLORS" ; }
 get_js() {
-    printf '<script>'
-    cat "$PUBMAP_DATA_HOME"/js/*.js
-    printf '</script>'
+    printf '<script>'; cat "$PUBMAP_DATA_HOME"/js/*.js ; printf '</script>' ;
 }
 
 # NO NEW LINES ... escape em cuz posix wont take em
 nnl() { awk '{printf "%s\\n", $0}'; }
+## bring em back later in awk...
 
+# Assemble final layout
 layout() {
     local -r main="$1"
     local -r layout_opt=(
-        "$POSIX"
         -f "$PUBMAP_LAYOUT_AWK"
         -v "NAME=$NAME"
         -v "DATE=$(date +%F)"
