@@ -5,7 +5,7 @@ BEGIN {
 }
 
 # Check for the line starting with ### to mark the beginning of content
-/^###/ {
+/^###$/ {
     NotesSectionStart = 1
     next  # Skip this line
 }

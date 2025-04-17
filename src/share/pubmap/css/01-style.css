@@ -81,7 +81,8 @@ h2 {
   transform: scale(1.125);
 }
 
-[data-type="minor"].highlight {
+[data-horiz="right"].highlight,
+[data-horiz="left"].highlight {
   transform: scale(1.5);
 }
 
@@ -99,8 +100,10 @@ h2 {
 
 .notes {
   padding: 0 1em;
-  margin-left: 1em;
-  border-left: 1px solid var(--transfg);
+}
+
+.notes ul {
+  list-style-type: square;
 }
 
 .spread {

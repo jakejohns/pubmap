@@ -24,6 +24,13 @@
     margin-left: 2em;
   }
 
+  .notes {
+    padding: 0 2em;
+    margin-left: 1em;
+    border-left: 1px solid var(--transfg);
+    max-width: 40%;
+  }
+
   .spread {
     width: 33.33%;
   }

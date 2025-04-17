@@ -31,7 +31,7 @@
     const e_flatcount = ele.getAttribute("data-flatcount");
     const e_tip =
       e_type == "major"
-        ? `<strong>~${e_pages}</strong>${e_flatcount > 1 ? "/" + e_total : ""}pp on flat ${e_flat}`
+        ? `<strong>~${e_pages}</strong>${e_flatcount > 1 ? "/" + e_total + "pp on flat " + e_flat : "pp"}`
         : `${e_desc}`;
     tooltipText.innerHTML = `<span style="--item-color:var(--color${e_story});" class="${e_type}-tip">${e_tip}</span>`;
 
