@@ -1,0 +1,2009 @@
+<html>
+  <head>
+    <title>📄 My Publication No. 1337 (rev: 1970-01-01T01:01:00Z)</title>
+    <meta name="dcterms.created" content="1970-01-01" />
+    <style>
+      :root {
+        --fg: #fff;
+        --bg: #111;
+        --transbg: #0000007d;
+        --transfg: #ffffff7d;
+        --stripe: #333;
+        --flash: #f0f;
+      }
+      .light-theme {
+        --fg: #000;
+        --bg: #fff;
+        --transbg: #ffffff7d;
+        --transfg: #0000007d;
+        --stripe: #ddd;
+      }
+      * {
+        font-family: monospace;
+      }
+      html {
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+        scroll-padding-top: 3em;
+        font-size: 16px;
+      }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: inherit;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+      }
+      .toggle-btn {
+        background: transparent;
+        border: 0;
+        color: var(--fg);
+        cursor: pointer;
+        display: block;
+        margin: 0 0.25em;
+        padding: 0.25em;
+        transition: background-color 0.3s ease;
+      }
+      h1,
+      h2 {
+        margin: 0;
+      }
+      .section-ee h2::before {
+        content: "§ | ";
+      }
+      h1 {
+        margin-left: 0.25em;
+        font-size: 1.25em;
+      }
+      h2 {
+        font-size: 1.125em;
+      }
+      .map,
+      .flat,
+      .ee-section,
+      .bev-section,
+      .element {
+        border: 1px solid var(--transfg);
+        margin: 0.25em;
+        padding: 0.5em;
+      }
+      .element {
+        transition: 0.25s;
+        cursor: help;
+        background-color: var(--item-color);
+        flex-grow: var(--item-weight);
+      }
+      .highlight {
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+        transform: scale(1.125);
+      }
+      [data-horiz="right"].highlight,
+      [data-horiz="left"].highlight {
+        transform: scale(1.5);
+      }
+      .map,
+      .ee-section,
+      .bev-section {
+        margin-bottom: 1em;
+      }
+      .ee-section,
+      .bev-section {
+        border-width: 0 0 1px;
+        padding-bottom: 2em;
+      }
+      .notes {
+        padding: 0 1em;
+      }
+      .notes ul {
+        list-style-type: square;
+      }
+      .spread {
+        display: flex;
+        justify-content: space-between;
+        padding: 1em;
+      }
+      .flat {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 51vw;
+        width: 50%;
+      }
+      .flat footer {
+        font-size: 0.9em;
+        text-align: center;
+        position: relative;
+        z-index: 999;
+      }
+      .flat footer span {
+        background: var(--bg);
+        display: inline-block;
+        padding: 0.25em 0.5em;
+      }
+      .elements {
+        display: flex;
+        flex-direction: column;
+        flex-grow: var(--weight, 1);
+        justify-content: space-between;
+        position: relative;
+        transition: all 2s;
+      }
+      .split {
+        display: flex;
+      }
+      .split .split {
+        flex-direction: column;
+      }
+      .split strong {
+        font-size: 0.9em;
+      }
+      .element strong {
+        background: var(--bg);
+        color: var(--fg);
+        display: inline-block;
+        padding: 0.25em 0.5em;
+        margin: 0 0 0.25em;
+      }
+      .title-right {
+        text-align: right;
+      }
+      .element .jump,
+      .element .index {
+        background: var(--transbg);
+        display: inline-block;
+        line-height: 1;
+        font-size: 0.8em;
+        padding: 0.2rem;
+        margin: 0.2rem 0;
+      }
+      .element .jump {
+        font-style: italic;
+      }
+      .element[data-type="minor"] {
+        font-size: 0.85em;
+        border-bottom-right-radius: 1em;
+        border-top-left-radius: 1em;
+      }
+      .element[data-vert="up"] {
+        bottom: auto;
+        top: 1px;
+      }
+      .element[data-horiz="left"],
+      .element[data-horiz="right"] {
+        bottom: 0;
+        position: absolute;
+        max-width: 50%;
+      }
+      .element[data-horiz="left"] {
+        left: 1px;
+      }
+      .element[data-horiz="right"] {
+        right: 1px;
+      }
+      .element[data-align="right"] {
+        text-align: right;
+      }
+      @keyframes flash {
+        0% {
+          background-color: inherit;
+        }
+        50% {
+          background-color: var(--flash);
+        }
+        100% {
+          background-color: inherit;
+        }
+      }
+      .flash {
+        animation: flash 0.5s 3;
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          box-shadow: 0 0 20px var(--flash);
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      @keyframes pulse2 {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          box-shadow: 0 0 10px var(--fg);
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .pulse,
+      .flat:target {
+        animation: pulse 0.6s ease-in-out 2;
+      }
+      .pulse2 {
+        animation: pulse2 0.6s ease-in-out 2;
+      }
+      .tooltip-text {
+        background-color: var(--bg);
+        border-radius: 3px;
+        border: 1px solid var(--fg);
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+        color: var(--fg);
+        font-size: 0.9em;
+        opacity: 0;
+        padding: 0.5em;
+        position: absolute;
+        text-align: center;
+        transition: opacity 0.3s;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      .minor-tip::before,
+      .major-tip::before {
+        color: var(--item-color);
+      }
+      .minor-tip::before {
+        content: "◱| ";
+      }
+      .major-tip::before {
+        content: "¶| ";
+      }
+      table thead tr::before,
+      table tbody tr::before,
+      table tfoot tr::before {
+        display: table-cell;
+        text-align: right;
+        padding: 0.5rem 0.3em;
+        background: #000;
+        color: #fff;
+        width: 1%;
+        border: 1px solid #000;
+      }
+      tbody th {
+        cursor: pointer;
+      }
+      table thead tr::before {
+        content: "#";
+        text-align: center;
+      }
+      table tfoot tr::before {
+        content: "";
+      }
+      table tbody tr::before {
+        counter-increment: rowNumber;
+        content: counter(rowNumber) ".";
+      }
+      table {
+        counter-reset: rowNumber;
+        margin: 1em 0;
+        border-collapse: collapse;
+        background: var(--bg);
+      }
+      .stats-ads-container {
+        flex-grow: 1;
+      }
+      table td {
+        text-align: right;
+      }
+      table tfoot,
+      table thead {
+        background: #000;
+        color: #fff;
+      }
+      table tbody th {
+        text-align: left;
+      }
+      tbody tr:target {
+        animation: flash 0.6s ease-in-out 2;
+      }
+      table tr:nth-child(even) {
+        background: var(--stripe);
+      }
+      table tr td,
+      table tr th {
+        padding: 0.5em 1em;
+        border: 1px solid #000;
+      }
+      tbody th::before {
+        content: "██ ";
+        color: var(--item-color);
+      }
+      .sorted-asc::after {
+        content: " ↑";
+      }
+      .sorted-desc::after {
+        content: " ↓";
+      }
+      .search-ctrl {
+        align-items: center;
+        display: flex;
+        gap: 0.5em;
+        font-size: 0.9em;
+      }
+      .search-input {
+        background: var(--bg);
+        color: var(--fg);
+        border: 1px solid var(--transfg);
+        padding: 0.25em;
+        width: 100%;
+      }
+      .clear-btn {
+        padding: 0.25em;
+        background-color: var(--bg);
+        border: 1px solid var(--transfg);
+        color: var(--fg);
+        cursor: pointer;
+      }
+      .row-count {
+        font-size: 0.9em;
+        color: #555;
+      }
+      .sortable th {
+        cursor: pointer;
+      }
+      table .ad,
+      table .article {
+        text-wrap: nowrap;
+      }
+      table .manuscript {
+        min-width: 6em;
+      }
+      table .manuscript span::before {
+        content: "~";
+      }
+      .article-table .flats {
+        min-width: 8em;
+      }
+      table .flatlink {
+        text-decoration: underline;
+        text-decoration-color: var(--transfg);
+        display: inline-block;
+        min-width: 1.25em;
+      }
+      table .flatlink:hover,
+      table .flatlink:focus {
+        color: var(--flash);
+      }
+      .bev {
+        width: 100%;
+      }
+      .bev td {
+        text-align: center;
+      }
+      .bev .two-person {
+        min-width: 10em;
+      }
+      .bev th:first-child,
+      .bev .phase-end {
+        border-right-width: 3px;
+      }
+      .bev .phase-pre {
+        background: #1a1a1a;
+        font-size: 0.95em;
+        max-width: 4em;
+      }
+      .bev .phase-galley {
+        background: #333;
+      }
+      .bev .phase-first {
+        background: #4d4d4d;
+      }
+      .bev .phase-second {
+        background: #666;
+      }
+      @media (min-width: 600px) {
+        .map {
+          display: flex;
+          flex-wrap: wrap;
+        }
+        .spread {
+          width: 50%;
+        }
+        .flat {
+          min-height: 27vw;
+        }
+      }
+      @media (min-width: 1024px) {
+        .ee-tables {
+          display: flex;
+          justify-content: stretch;
+          gap: 1em;
+        }
+        .ee-extras {
+          margin-left: 2em;
+        }
+        .notes {
+          padding: 0 2em;
+          margin-left: 1em;
+          border-left: 1px solid var(--transfg);
+          max-width: 40%;
+        }
+        .spread {
+          width: 33.33%;
+        }
+        .flat {
+          min-height: 18vw;
+        }
+      }
+      @media (min-width: 1300px) {
+        .spread {
+          width: 25%;
+        }
+        .flat {
+          min-height: 15vw;
+        }
+      }
+      @media print {
+        :root {
+          --fg: #000;
+          --bg: #fff;
+          --transbg: #ffffff7d;
+          --transfg: #0000007d;
+          --stripe: #ddd;
+        }
+        * {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        html {
+          font-size: 10pt;
+        }
+        section {
+          break-inside: avoid;
+          padding: 0.25em;
+        }
+        .map {
+          display: flex;
+          flex-wrap: wrap;
+        }
+        .spread {
+          width: 50%;
+        }
+        .flat {
+          break-inside: avoid;
+          min-height: 26vw;
+        }
+        table {
+          break-inside: avoid;
+        }
+        .search-input,
+        .clear-btn,
+        .toggle-btn {
+          display: none;
+        }
+      }
+      @media only print and (min-width: 9in) {
+        html {
+          font-size: 14pt;
+        }
+      }
+      :root {
+        --color1: #696969;
+        --color2: #228b22;
+        --color3: #a0522d;
+        --color4: #808000;
+        --color5: #483d8b;
+        --color6: #008b8b;
+        --color7: #9acd32;
+        --color8: #800080;
+        --color9: #8fbc8f;
+        --color10: #b03060;
+        --color11: #ffff00;
+        --color12: #ff0000;
+        --color13: #ffa500;
+        --color14: #7cfc00;
+        --color15: #00ffff;
+        --color16: #8a2be2;
+        --color17: #00bfff;
+        --color18: #f4a460;
+        --color19: #0000ff;
+        --color20: #ff6347;
+        --color21: #da70d6;
+        --color22: #b0c4de;
+        --color23: #ff00ff;
+        --color24: #1e90ff;
+        --color25: #f0e68c;
+        --color26: #90ee90;
+        --color27: #ff1493;
+        --color28: #7b68ee;
+        --color29: #ffb6c1;
+        --color30: #00008b;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header id="masthead">
+      <h1>📄 My Publication No. 1337 (rev: 1970-01-01T01:01:00Z)</h1>
+    </header>
+    <main>
+      <div class="section-map">
+        <!-- <h2>My Publication No. 1337 :: Map <small>1970-01-01</small></h2> -->
+        <div class="map">
+          <div class="spread">
+            <div class="flat" id="flat-8">
+              <div class="elements">
+                <a
+                  id="element-18"
+                  class="element"
+                  style="--item-weight: 1; --item-color: var(--color12)"
+                  href="#tr-12"
+                  data-align="none"
+                  data-desc="..."
+                  data-flat="8"
+                  data-flatcount="2"
+                  data-flatlist="7,8"
+                  data-horiz="none"
+                  data-name="jumps"
+                  data-pages="3.0"
+                  data-pos="2"
+                  data-story="12"
+                  data-tpages="9"
+                  data-type="major"
+                  data-vert="none"
+                  data-weight="1"
+                  ><strong class="name">jumps</strong>
+                  <span class="index">(1/2)</span>
+                  <span class="jump">cont: p7</span>
+                </a>
+
+                <a
+                  id="element-19"
+                  class="element"
+                  style="--item-weight: 1; --item-color: var(--color14)"
+                  href="#tr-14"
+                  data-align="none"
+                  data-desc="..."
+                  data-flat="8"
+                  data-flatcount="1"
+                  data-flatlist="8"
+                  data-horiz="none"
+                  data-name="also"
+                  data-pages="3.0"
+                  data-pos="2"
+                  data-story="14"
+                  data-tpages="3"
+                  data-type="major"
+                  data-vert="none"
+                  data-weight="1"
+                  ><strong class="name">also</strong>
+                </a>
+              </div>
+              <footer><span>8</span></footer>
+            </div>
+            <div class="flat" id="flat-1">
+              <div class="elements">
+                <a
+                  id="element-1"
+                  class="element"
+                  style="--item-weight: 2; --item-color: var(--color1)"
+                  href="#tr-1"
+                  data-align="none"
+                  data-desc="..."
+                  data-flat="1"
+                  data-flatcount="3"
+                  data-flatlist="1,4,5"
+                  data-horiz="none"
+                  data-name="lead"
+                  data-pages="4.0"
+                  data-pos="2"
+                  data-story="1"
+                  data-tpages="14.5"
+                  data-type="major"
+                  data-vert="none"
+                  data-weight="2"
+                  ><strong class="name">lead</strong>
+                  <span class="index">(1/3)</span>
+                  <span class="jump">cont: p4</span>
+                </a>
+
+                <a
+                  id="element-2"
+                  class="element"
+                  style="--item-weight: 1; --item-color: var(--color2)"
+                  href="#tr-2"
+                  data-align="none"
+                  data-desc="..."
+                  data-flat="1"
+                  data-flatcount="2"
+                  data-flatlist="1,2"
+                  data-horiz="none"
+                  data-name="article"
+                  data-pages="2.0"
+                  data-pos="2"
+                  data-story="2"
+                  data-tpages="4.1"
+                  data-type="major"
+                  data-vert="none"
+                  data-weight="1"
+                  ><strong class="name">article</strong>
+                  <span class="index">(1/2)</span>
+                </a>
+              </div>
+              <footer><span>1</span></footer>
+            </div>
+          </div>
+
+          <div class="spread">
+            <div class="flat" id="flat-2">
+              <div class="elements">
+                <a
+                  id="element-3"
+                  class="element"
+                  style="--item-weight: 5; --item-color: var(--color2)"
+                  href="#tr-2"
+                  data-align="none"
+                  data-desc="..."
+                  data-flat="2"
+                  data-flatcount="2"
+                  data-flatlist="1,2"
+                  data-horiz="none"
+                  data-name="article"
+                  data-pages="2.1"
+                  data-pos="6"
+                  data-story="2"
+                  data-tpages="4.1"
+                  data-type="major"
+                  data-vert="none"
+                  data-weight="5"
+                  ><strong class="name">article</strong>
+                  <span class="index">(2/2)</span>
+                </a>
+
+                <div style="flex-grow: 1" class="split">
+                  <div style="flex-grow: 1" class="split">
+                    <a
+                      id="element-4"
+                      class="element"
+                      style="--item-weight: 1; --item-color: var(--color3)"
+                      href="#tr-3"
+                      data-align="none"
+                      data-desc="..."
+                      data-flat="2"
+                      data-flatcount="1"
+                      data-flatlist="2"
+                      data-horiz="none"
+                      data-name="correx"
+                      data-pages="0.4"
+                      data-pos="6"
+                      data-story="3"
+                      data-tpages="0.4"
+                      data-type="major"
+                      data-vert="none"
+                      data-weight="1"
+                      ><strong class="name">correx</strong>
+                    </a>
+
+                    <a
+                      id="element-5"
+                      class="element"
+                      style="--item-weight: 4; --item-color: var(--color4)"
+                      href="#tr-4"
+                      data-align="none"
+                      data-desc="..."
+                      data-flat="2"
+                      data-flatcount="1"
+                      data-flatlist="2"
+                      data-horiz="none"
+                      data-name="quote"
+                      data-pages="1.7"
+                      data-pos="6"
+                      data-story="4"
+                      data-tpages="1.7"
+                      data-type="major"
+                      data-vert="none"
+                      data-weight="4"
+                      ><strong class="name">quote</strong>
+                    </a>
+
+                    <a
+                      id="element-6"
+                      class="element"
+                      style="--item-weight: 1; --item-color: var(--color5)"
+                      href="#tr-5"
+                      data-align="none"
+                      data-desc="editorial box "
+                      data-flat="2"
+                      data-flatcount="1"
+                      data-flatlist="2"
+                      data-horiz="none"
+                      data-name="ed"
+                      data-pages="0.4"
+                      data-pos="6"
+                      data-story="5"
+                      data-tpages="0.4"
+                      data-type="minor"
+                      data-vert="none"
+                      data-weight="1"
+                      ><strong class="name">ed</strong>
+                    </a>
+                  </div>
+                  <div style="flex-grow: 4" class="split">
+                    <a
+                      id="element-7"
+                      class="element"
+                      style="--item-weight: 4; --item-color: var(--color6)"
+                      href="#tr-6"
+                      data-align="none"
+                      data-desc="..."
+                      data-flat="2"
+                      data-flatcount="1"
+                      data-flatlist="2"
+                      data-horiz="none"
+                      data-name="foo"
+                      data-pages="1.7"
+                      data-pos="6"
+                      data-story="6"
+                      data-tpages="1.7"
+                      data-type="major"
+                      data-vert="none"
+                      data-weight="4"
+                      ><strong class="name">foo</strong>
+                    </a>
+
+                    <a
+                      id="element-8"
+                      class="element"
+                      style="--item-weight: 1; --item-color: var(--color7)"
+                      href="#tr-7"
+                      data-align="none"
+                      data-desc="subscription info "
+                      data-flat="2"
+                      data-flatcount="1"
+                      data-flatlist="2"
+                      data-horiz="none"
+                      data-name="sub"
+                      data-pages="0.4"
+                      data-pos="6"
+                      data-story="7"
+                      data-tpages="0.4"
+                      data-type="minor"
+                      data-vert="none"
+                      data-weight="1"
+                      ><strong class="name">sub</strong>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <footer><span>2</span></footer>
+            </div>
+            <div class="flat" id="flat-3">
+              <div class="elements">
+                <a
+                  id="element-9"
+                  class="element"
+                  style="--item-weight: 2; --item-color: var(--color8)"
+                  href="#tr-8"
+                  data-align="none"
+                  data-desc="..."
+                  data-flat="3"
+                  data-flatcount="1"
+                  data-flatlist="3"
+                  data-horiz="none"
+                  data-name="important"
+                  data-pages="4.0"
+                  data-pos="3"
+                  data-story="8"
+                  data-tpages="4"
+                  data-type="major"
+                  data-vert="none"
+                  data-weight="2"
+                  ><strong class="name">important</strong>
+                </a>
+
+                <a
+                  id="element-10"
+                  class="element"
+                  style="--item-weight: 1; --item-color: var(--color9)"
+                  href="#tr-9"
+                  data-align="none"
+                  data-desc="..."
+                  data-flat="3"
+                  data-flatcount="1"
+                  data-flatlist="3"
+                  data-horiz="none"
+                  data-name="quuz"
+                  data-pages="2.0"
+                  data-pos="3"
+                  data-story="9"
+                  data-tpages="2"
+                  data-type="major"
+                  data-vert="none"
+                  data-weight="1"
+                  ><strong class="name">quuz</strong>
+                </a>
+
+                <a
+                  id="element-11"
+                  class="element"
+                  style="--item-weight: 1; --item-color: var(--color10)"
+                  href="#tr-10"
+                  data-align="none"
+                  data-desc="Ad for big October event"
+                  data-flat="3"
+                  data-flatcount="1"
+                  data-flatlist="3"
+                  data-horiz="right"
+                  data-name="evnt"
+                  data-pages="2.0"
+                  data-pos="3"
+                  data-story="10"
+                  data-tpages="2"
+                  data-type="minor"
+                  data-vert="none"
+                  data-weight="1"
+                  ><strong class="name">evnt</strong>
+                </a>
+              </div>
+              <footer><span>3</span></footer>
+            </div>
+          </div>
+
+          <div class="spread">
+            <div class="flat" id="flat-4">
+              <div class="elements">
+                <a
+                  id="element-12"
+                  class="element"
+                  style="--item-weight: 1; --item-color: var(--color1)"
+                  href="#tr-1"
+                  data-align="none"
+                  data-desc="..."
+                  data-flat="4"
+                  data-flatcount="3"
+                  data-flatlist="1,4,5"
+                  data-horiz="none"
+                  data-name="lead"
+                  data-pages="6.0"
+                  data-pos="1"
+                  data-story="1"
+                  data-tpages="14.5"
+                  data-type="major"
+                  data-vert="none"
+                  data-weight="1"
+                  ><strong class="name">lead</strong>
+                  <span class="index">(2/3)</span>
+                  <span class="jump">from: p1</span>
+                </a>
+              </div>
+              <footer><span>4</span></footer>
+            </div>
+            <div class="flat" id="flat-5">
+              <div class="elements">
+                <a
+                  id="element-13"
+                  class="element"
+                  style="--item-weight: 3; --item-color: var(--color1)"
+                  href="#tr-1"
+                  data-align="none"
+                  data-desc="..."
+                  data-flat="5"
+                  data-flatcount="3"
+                  data-flatlist="1,4,5"
+                  data-horiz="none"
+                  data-name="lead"
+                  data-pages="4.5"
+                  data-pos="2"
+                  data-story="1"
+                  data-tpages="14.5"
+                  data-type="major"
+                  data-vert="none"
+                  data-weight="3"
+                  ><strong class="name">lead</strong>
+                  <span class="index">(3/3)</span>
+                </a>
+
+                <a
+                  id="element-14"
+                  class="element"
+                  style="--item-weight: 1; --item-color: var(--color11)"
+                  href="#tr-11"
+                  data-align="none"
+                  data-desc="..."
+                  data-flat="5"
+                  data-flatcount="2"
+                  data-flatlist="5,6"
+                  data-horiz="none"
+                  data-name="b-series"
+                  data-pages="1.5"
+                  data-pos="2"
+                  data-story="11"
+                  data-tpages="7.5"
+                  data-type="major"
+                  data-vert="none"
+                  data-weight="1"
+                  ><strong class="name">b-series</strong>
+                  <span class="index">(1/2)</span>
+                </a>
+              </div>
+              <footer><span>5</span></footer>
+            </div>
+          </div>
+
+          <div class="spread">
+            <div class="flat" id="flat-6">
+              <div class="elements">
+                <a
+                  id="element-15"
+                  class="element"
+                  style="--item-weight: 1; --item-color: var(--color11)"
+                  href="#tr-11"
+                  data-align="none"
+                  data-desc="..."
+                  data-flat="6"
+                  data-flatcount="2"
+                  data-flatlist="5,6"
+                  data-horiz="none"
+                  data-name="b-series"
+                  data-pages="6.0"
+                  data-pos="1"
+                  data-story="11"
+                  data-tpages="7.5"
+                  data-type="major"
+                  data-vert="none"
+                  data-weight="1"
+                  ><strong class="name">b-series</strong>
+                  <span class="index">(2/2)</span>
+                </a>
+              </div>
+              <footer><span>6</span></footer>
+            </div>
+            <div class="flat" id="flat-7">
+              <div class="elements">
+                <a
+                  id="element-16"
+                  class="element"
+                  style="--item-weight: 1; --item-color: var(--color12)"
+                  href="#tr-12"
+                  data-align="none"
+                  data-desc="..."
+                  data-flat="7"
+                  data-flatcount="2"
+                  data-flatlist="7,8"
+                  data-horiz="none"
+                  data-name="jumps"
+                  data-pages="6.0"
+                  data-pos="2"
+                  data-story="12"
+                  data-tpages="9"
+                  data-type="major"
+                  data-vert="none"
+                  data-weight="1"
+                  ><strong class="name">jumps</strong>
+                  <span class="index">(2/2)</span>
+                  <span class="jump">from: backpage</span>
+                </a>
+
+                <a
+                  id="element-17"
+                  class="element"
+                  style="--item-weight: 0; --item-color: var(--color13)"
+                  href="#tr-13"
+                  data-align="none"
+                  data-desc="Directory"
+                  data-flat="7"
+                  data-flatcount="1"
+                  data-flatlist="7"
+                  data-horiz="none"
+                  data-name="dir"
+                  data-pages="0.0"
+                  data-pos="2"
+                  data-story="13"
+                  data-tpages="0"
+                  data-type="minor"
+                  data-vert="none"
+                  data-weight="0"
+                  ><strong class="name">dir</strong>
+                </a>
+              </div>
+              <footer><span>7</span></footer>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="ee-section">
+        <h2>§ My Publication No. 1337 :: Elements & Estimates</h2>
+        <div class="ee-tables">
+          <div class="ee-articles">
+            <table id="article-table" class="article-table">
+              <thead>
+                <tr>
+                  <th class="article">Article</th>
+                  <th class="flats">Flat #(s)</th>
+                  <th class="manuscript">
+                    <abbr title="Manuscript Pages/Flat"
+                      >MS@<strong>6</strong>/f</abbr
+                    >
+                  </th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>TOTAL</th>
+                  <td id="flat-count">8</td>
+                  <td>~47.9</td>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr
+                  id="tr-1"
+                  style="--item-color: var(--color1)"
+                  data-desc="..."
+                  data-flatcount="3"
+                  data-flatlist="1,4,5"
+                  data-name="lead"
+                  data-story="1"
+                  data-tpages="14.5"
+                  data-type="major"
+                >
+                  <th class="article">lead</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-1">1</a>,<a
+                      class="flatlink"
+                      href="#flat-4"
+                      >4</a
+                    >,<a class="flatlink" href="#flat-5">5</a>
+                  </td>
+                  <td class="manuscript"><span>14.5</span></td>
+                </tr>
+
+                <tr
+                  id="tr-2"
+                  style="--item-color: var(--color2)"
+                  data-desc="..."
+                  data-flatcount="2"
+                  data-flatlist="1,2"
+                  data-name="article"
+                  data-story="2"
+                  data-tpages="4.1"
+                  data-type="major"
+                >
+                  <th class="article">article</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-1">1</a>,<a
+                      class="flatlink"
+                      href="#flat-2"
+                      >2</a
+                    >
+                  </td>
+                  <td class="manuscript"><span>4.1</span></td>
+                </tr>
+
+                <tr
+                  id="tr-3"
+                  style="--item-color: var(--color3)"
+                  data-desc="..."
+                  data-flatcount="1"
+                  data-flatlist="2"
+                  data-name="correx"
+                  data-story="3"
+                  data-tpages="0.4"
+                  data-type="major"
+                >
+                  <th class="article">correx</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-2">2</a>
+                  </td>
+                  <td class="manuscript"><span>0.4</span></td>
+                </tr>
+
+                <tr
+                  id="tr-4"
+                  style="--item-color: var(--color4)"
+                  data-desc="..."
+                  data-flatcount="1"
+                  data-flatlist="2"
+                  data-name="quote"
+                  data-story="4"
+                  data-tpages="1.7"
+                  data-type="major"
+                >
+                  <th class="article">quote</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-2">2</a>
+                  </td>
+                  <td class="manuscript"><span>1.7</span></td>
+                </tr>
+
+                <tr
+                  id="tr-6"
+                  style="--item-color: var(--color6)"
+                  data-desc="..."
+                  data-flatcount="1"
+                  data-flatlist="2"
+                  data-name="foo"
+                  data-story="6"
+                  data-tpages="1.7"
+                  data-type="major"
+                >
+                  <th class="article">foo</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-2">2</a>
+                  </td>
+                  <td class="manuscript"><span>1.7</span></td>
+                </tr>
+
+                <tr
+                  id="tr-8"
+                  style="--item-color: var(--color8)"
+                  data-desc="..."
+                  data-flatcount="1"
+                  data-flatlist="3"
+                  data-name="important"
+                  data-story="8"
+                  data-tpages="4"
+                  data-type="major"
+                >
+                  <th class="article">important</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-3">3</a>
+                  </td>
+                  <td class="manuscript"><span>4</span></td>
+                </tr>
+
+                <tr
+                  id="tr-9"
+                  style="--item-color: var(--color9)"
+                  data-desc="..."
+                  data-flatcount="1"
+                  data-flatlist="3"
+                  data-name="quuz"
+                  data-story="9"
+                  data-tpages="2"
+                  data-type="major"
+                >
+                  <th class="article">quuz</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-3">3</a>
+                  </td>
+                  <td class="manuscript"><span>2</span></td>
+                </tr>
+
+                <tr
+                  id="tr-11"
+                  style="--item-color: var(--color11)"
+                  data-desc="..."
+                  data-flatcount="2"
+                  data-flatlist="5,6"
+                  data-name="b-series"
+                  data-story="11"
+                  data-tpages="7.5"
+                  data-type="major"
+                >
+                  <th class="article">b-series</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-5">5</a>,<a
+                      class="flatlink"
+                      href="#flat-6"
+                      >6</a
+                    >
+                  </td>
+                  <td class="manuscript"><span>7.5</span></td>
+                </tr>
+
+                <tr
+                  id="tr-12"
+                  style="--item-color: var(--color12)"
+                  data-desc="..."
+                  data-flatcount="2"
+                  data-flatlist="7,8"
+                  data-name="jumps"
+                  data-story="12"
+                  data-tpages="9"
+                  data-type="major"
+                >
+                  <th class="article">jumps</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-7">7</a>,<a
+                      class="flatlink"
+                      href="#flat-8"
+                      >8</a
+                    >
+                  </td>
+                  <td class="manuscript"><span>9</span></td>
+                </tr>
+
+                <tr
+                  id="tr-14"
+                  style="--item-color: var(--color14)"
+                  data-desc="..."
+                  data-flatcount="1"
+                  data-flatlist="8"
+                  data-name="also"
+                  data-story="14"
+                  data-tpages="3"
+                  data-type="major"
+                >
+                  <th class="article">also</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-8">8</a>
+                  </td>
+                  <td class="manuscript"><span>3</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="ee-extras">
+            <table id="extra-table" class="extra-table">
+              <thead>
+                <tr>
+                  <th>Ad/Extra</th>
+                  <th>Flat #</th>
+                  <th>Desc/Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  id="tr-5"
+                  style="--item-color: var(--color5)"
+                  data-desc="editorial box "
+                  data-flatcount="1"
+                  data-flatlist="2"
+                  data-name="ed"
+                  data-story="5"
+                  data-tpages="0.4"
+                  data-type="minor"
+                >
+                  <th class="article">ed</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-2">2</a>
+                  </td>
+                  <td class="manuscript">editorial box</td>
+                </tr>
+
+                <tr
+                  id="tr-7"
+                  style="--item-color: var(--color7)"
+                  data-desc="subscription info "
+                  data-flatcount="1"
+                  data-flatlist="2"
+                  data-name="sub"
+                  data-story="7"
+                  data-tpages="0.4"
+                  data-type="minor"
+                >
+                  <th class="article">sub</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-2">2</a>
+                  </td>
+                  <td class="manuscript">subscription info</td>
+                </tr>
+
+                <tr
+                  id="tr-10"
+                  style="--item-color: var(--color10)"
+                  data-desc="Ad for big October event"
+                  data-flatcount="1"
+                  data-flatlist="3"
+                  data-name="evnt"
+                  data-story="10"
+                  data-tpages="2"
+                  data-type="minor"
+                >
+                  <th class="article">evnt</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-3">3</a>
+                  </td>
+                  <td class="manuscript">Ad for big October event</td>
+                </tr>
+
+                <tr
+                  id="tr-13"
+                  style="--item-color: var(--color13)"
+                  data-desc="Directory"
+                  data-flatcount="1"
+                  data-flatlist="7"
+                  data-name="dir"
+                  data-story="13"
+                  data-tpages="0"
+                  data-type="minor"
+                >
+                  <th class="article">dir</th>
+                  <td class="flats">
+                    <a class="flatlink" href="#flat-7">7</a>
+                  </td>
+                  <td class="manuscript">Directory</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="notes">
+            <p><!-- Primative Markdown accepted here --></p>
+            <h3>The closing date for news in this issue is January 1, 1970.</h3>
+            <p></p>
+            <ul>
+              <li>Foo Bar: Bing Baz</li>
+              <li>Quux: Xyzzy Grault</li>
+            </ul>
+            <p></p>
+            <p></p>
+            <p>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="bev-section">
+        <h2>☑️ My Publication No. 1337 :: Birdseye View</h2>
+        <div class="bev">
+          <table id="bev-table" class="bev-table">
+            <thead>
+              <tr>
+                <th class="article">Article</th>
+                <th class="phase-pre photos">Photos</th>
+                <th class="phase-pre layout-approved">Layout</th>
+                <th class="phase-pre phase-end copy-in">Copy</th>
+                <th class="phase-galley galley-set">Galley</th>
+                <th class="phase-galley galley-check">G. Check</th>
+                <th class="phase-galley phase-end correx-galley">G. Crx?</th>
+                <th class="phase-first two-person proof-1">1st Proof</th>
+                <th class="phase-first correx-1">1st Crx?</th>
+                <th class="phase-first two-person phase-end proof-crx-1">
+                  Proof Crx?
+                </th>
+                <th class="phase-second two-person proof-2">2nd Proof</th>
+                <th class="phase-second correx-2">2nd Crx?</th>
+                <th class="phase-second two-person proof-crx-2">Proof Crx?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                id="bevarticle-1"
+                style="--item-color: var(--color1)"
+                data-desc="..."
+                data-flatcount="3"
+                data-flatlist="1,4,5"
+                data-name="lead"
+                data-story="1"
+                data-tpages="14.5"
+                data-type="major"
+              >
+                <th>lead</th>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td>|</td>
+                <td></td>
+                <td class="phase-end">|</td>
+                <td>|</td>
+                <td></td>
+                <td>|</td>
+              </tr>
+
+              <tr
+                id="bevarticle-2"
+                style="--item-color: var(--color2)"
+                data-desc="..."
+                data-flatcount="2"
+                data-flatlist="1,2"
+                data-name="article"
+                data-story="2"
+                data-tpages="4.1"
+                data-type="major"
+              >
+                <th>article</th>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td>|</td>
+                <td></td>
+                <td class="phase-end">|</td>
+                <td>|</td>
+                <td></td>
+                <td>|</td>
+              </tr>
+
+              <tr
+                id="bevarticle-3"
+                style="--item-color: var(--color3)"
+                data-desc="..."
+                data-flatcount="1"
+                data-flatlist="2"
+                data-name="correx"
+                data-story="3"
+                data-tpages="0.4"
+                data-type="major"
+              >
+                <th>correx</th>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td>|</td>
+                <td></td>
+                <td class="phase-end">|</td>
+                <td>|</td>
+                <td></td>
+                <td>|</td>
+              </tr>
+
+              <tr
+                id="bevarticle-4"
+                style="--item-color: var(--color4)"
+                data-desc="..."
+                data-flatcount="1"
+                data-flatlist="2"
+                data-name="quote"
+                data-story="4"
+                data-tpages="1.7"
+                data-type="major"
+              >
+                <th>quote</th>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td>|</td>
+                <td></td>
+                <td class="phase-end">|</td>
+                <td>|</td>
+                <td></td>
+                <td>|</td>
+              </tr>
+
+              <tr
+                id="bevarticle-6"
+                style="--item-color: var(--color6)"
+                data-desc="..."
+                data-flatcount="1"
+                data-flatlist="2"
+                data-name="foo"
+                data-story="6"
+                data-tpages="1.7"
+                data-type="major"
+              >
+                <th>foo</th>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td>|</td>
+                <td></td>
+                <td class="phase-end">|</td>
+                <td>|</td>
+                <td></td>
+                <td>|</td>
+              </tr>
+
+              <tr
+                id="bevarticle-8"
+                style="--item-color: var(--color8)"
+                data-desc="..."
+                data-flatcount="1"
+                data-flatlist="3"
+                data-name="important"
+                data-story="8"
+                data-tpages="4"
+                data-type="major"
+              >
+                <th>important</th>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td>|</td>
+                <td></td>
+                <td class="phase-end">|</td>
+                <td>|</td>
+                <td></td>
+                <td>|</td>
+              </tr>
+
+              <tr
+                id="bevarticle-9"
+                style="--item-color: var(--color9)"
+                data-desc="..."
+                data-flatcount="1"
+                data-flatlist="3"
+                data-name="quuz"
+                data-story="9"
+                data-tpages="2"
+                data-type="major"
+              >
+                <th>quuz</th>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td>|</td>
+                <td></td>
+                <td class="phase-end">|</td>
+                <td>|</td>
+                <td></td>
+                <td>|</td>
+              </tr>
+
+              <tr
+                id="bevarticle-11"
+                style="--item-color: var(--color11)"
+                data-desc="..."
+                data-flatcount="2"
+                data-flatlist="5,6"
+                data-name="b-series"
+                data-story="11"
+                data-tpages="7.5"
+                data-type="major"
+              >
+                <th>b-series</th>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td>|</td>
+                <td></td>
+                <td class="phase-end">|</td>
+                <td>|</td>
+                <td></td>
+                <td>|</td>
+              </tr>
+
+              <tr
+                id="bevarticle-12"
+                style="--item-color: var(--color12)"
+                data-desc="..."
+                data-flatcount="2"
+                data-flatlist="7,8"
+                data-name="jumps"
+                data-story="12"
+                data-tpages="9"
+                data-type="major"
+              >
+                <th>jumps</th>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td>|</td>
+                <td></td>
+                <td class="phase-end">|</td>
+                <td>|</td>
+                <td></td>
+                <td>|</td>
+              </tr>
+
+              <tr
+                id="bevarticle-14"
+                style="--item-color: var(--color14)"
+                data-desc="..."
+                data-flatcount="1"
+                data-flatlist="8"
+                data-name="also"
+                data-story="14"
+                data-tpages="3"
+                data-type="major"
+              >
+                <th>also</th>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td></td>
+                <td></td>
+                <td class="phase-end"></td>
+                <td>|</td>
+                <td></td>
+                <td class="phase-end">|</td>
+                <td>|</td>
+                <td></td>
+                <td>|</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <script>
+      class SearchableTable {
+        constructor(tableElement) {
+          this.table = tableElement;
+
+          // Create the search control container (div.search-ctrl)
+          this.searchCtrl = document.createElement("div");
+          this.searchCtrl.className = "search-ctrl";
+
+          // Create the search input element
+          this.searchInput = document.createElement("input");
+          this.searchInput.type = "text";
+          this.searchInput.className = "search-input";
+          this.searchInput.placeholder = "Search this table...";
+
+          // Create the clear button
+          this.clearButton = document.createElement("button");
+          this.clearButton.className = "clear-btn";
+          this.clearButton.textContent = "Clear";
+
+          // Create the row count indicator
+          this.rowCountIndicator = document.createElement("div");
+          this.rowCountIndicator.className = "row-count";
+
+          // Append the input, clear button, and row count indicator to the search control div
+          this.searchCtrl.appendChild(this.searchInput);
+          this.searchCtrl.appendChild(this.clearButton);
+          this.searchCtrl.appendChild(this.rowCountIndicator);
+
+          // Insert the search control div after the table
+          this.table.parentNode.insertBefore(
+            this.searchCtrl,
+            this.table.nextSibling,
+          );
+
+          // Initialize search and clear button functionalities
+          this._initializeSearch();
+          this._initializeClearButton();
+        }
+
+        // Initialize the search functionality for the table
+        _initializeSearch() {
+          this.searchInput.addEventListener("keyup", () => this._filterRows());
+        }
+
+        // Initialize the clear button functionality
+        _initializeClearButton() {
+          this.clearButton.addEventListener("click", () => {
+            this.searchInput.value = "";
+            this._filterRows();
+          });
+        }
+
+        // Filter rows based on the search query
+        _filterRows() {
+          const query = this.searchInput.value.toLowerCase();
+          const rows = this.table.querySelectorAll("tbody tr");
+          let visibleCount = 0;
+
+          rows.forEach((row) => {
+            const rowCells = Array.from(row.querySelectorAll("td, th"));
+            const rowText = rowCells
+              .map((cell) => cell.textContent.toLowerCase())
+              .join(" ");
+
+            if (rowText.includes(query)) {
+              row.style.display = ""; // Show the row if it matches
+              visibleCount++;
+            } else {
+              row.style.display = "none"; // Hide the row if it doesn't match
+            }
+          });
+
+          this._updateRowCount(visibleCount, rows.length);
+        }
+
+        // Update the row count indicator
+        _updateRowCount(visibleCount, totalRows) {
+          this.rowCountIndicator.textContent = `${visibleCount} of ${totalRows} rows displayed`;
+        }
+      }
+      class SortableTable {
+        constructor(tableElement, lastFlat) {
+          this.table = tableElement;
+          this.lastFlat = lastFlat;
+          this.table.classList.add("sortable");
+
+          // Initialize the sorting functionality
+          this._initializeSort();
+        }
+
+        // Extract integers from a comma-delimited list of links (for "flats" columns)
+        _extractIntegers(cell) {
+          const links = Array.from(cell.querySelectorAll("a"));
+          const values = links.map((link) =>
+            parseInt(link.textContent.trim(), 10),
+          );
+          return values.filter((value) => !isNaN(value)); // Filter out invalid integers
+        }
+
+        // Sort by the first integer in the list (for "flats" columns)
+        _sortFlatList(rowA, rowB, columnIndex) {
+          const cellA = rowA.cells[columnIndex];
+          const cellB = rowB.cells[columnIndex];
+
+          const integersA = this._extractIntegers(cellA);
+          const integersB = this._extractIntegers(cellB);
+
+          const lastValueA =
+            integersA.length > 0 ? integersA[integersA.length - 1] : null;
+          const lastValueB =
+            integersB.length > 0 ? integersB[integersB.length - 1] : null;
+
+          // If the last value is the predefined lastFlat value, move this row to the bottom
+          const valueA = lastValueA === this.lastFlat ? Infinity : integersA[0];
+          const valueB = lastValueB === this.lastFlat ? Infinity : integersB[0];
+
+          return valueA - valueB; // Numeric sorting for the first value
+        }
+
+        // Sort by numeric value (for single integers in flat column)
+        _sortNumeric(rowA, rowB, columnIndex) {
+          const cellA = rowA.cells[columnIndex];
+          const cellB = rowB.cells[columnIndex];
+
+          const valueA = parseInt(cellA.textContent.trim(), 10);
+          const valueB = parseInt(cellB.textContent.trim(), 10);
+
+          if (isNaN(valueA) || isNaN(valueB)) return 0; // Handle invalid numbers
+
+          return valueA - valueB; // Numeric sorting
+        }
+
+        // Sort by text content (for normal columns)
+        _sortDefault(rowA, rowB, columnIndex) {
+          const cellA = rowA.cells[columnIndex];
+          const cellB = rowB.cells[columnIndex];
+
+          const valueA = cellA.textContent.trim();
+          const valueB = cellB.textContent.trim();
+
+          // Use localeCompare for string-based sorting
+          return valueA.localeCompare(valueB, undefined, {
+            sensitivity: "base",
+          });
+        }
+
+        // Sort the table by the clicked column
+        _sortTable(columnIndex, header) {
+          const rows = Array.from(this.table.querySelectorAll("tbody tr"));
+          const isAscending = header.classList.contains("sorted-asc");
+
+          // Remove previous sorted classes
+          this.table.querySelectorAll("th").forEach((th) => {
+            th.classList.remove("sorted-asc", "sorted-desc");
+          });
+
+          // Toggle sorting direction
+          if (isAscending) {
+            header.classList.add("sorted-desc");
+          } else {
+            header.classList.add("sorted-asc");
+          }
+
+          rows.sort((rowA, rowB) => {
+            let result;
+
+            // Call the appropriate sorting method based on the header class
+            if (
+              header.classList.contains("flat") ||
+              header.classList.contains("manuscript")
+            ) {
+              // Check for 'flat' class
+              result = this._sortNumeric(rowA, rowB, columnIndex); // Use _sortNumeric for single integers
+            } else if (header.classList.contains("flats")) {
+              // Check for 'flats' class
+              result = this._sortFlatList(rowA, rowB, columnIndex); // Use _sortFlatList for comma-separated values
+            } else {
+              result = this._sortDefault(rowA, rowB, columnIndex); // Default sorting for other columns
+            }
+
+            // Return the sorted result depending on the direction
+            return isAscending ? result : -result;
+          });
+
+          rows.forEach((row) =>
+            this.table.querySelector("tbody").appendChild(row),
+          ); // Reorder rows
+        }
+
+        // Initialize the sort functionality for the table
+        _initializeSort() {
+          const headers = this.table.querySelectorAll("thead th");
+
+          headers.forEach((header, index) => {
+            header.addEventListener("click", () =>
+              this._sortTable(index, header),
+            );
+          });
+        }
+      }
+      (function () {
+        // Get the document creation date from the meta tag with dcterms.created
+        const metaTag = document.querySelector('meta[name="dcterms.created"]');
+        if (!metaTag) {
+          console.error('Meta tag with name "dcterms.created" not found!');
+          return;
+        }
+
+        const creationDate = new Date(metaTag.getAttribute("content"));
+        const currentDate = new Date();
+        const ageInMilliseconds = currentDate - creationDate;
+
+        // Convert milliseconds to days
+        const ageInDays = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24));
+        const ageInYears = Math.floor(ageInDays / 365);
+        const remainingMonths = Math.floor((ageInDays % 365) / 30);
+        const remainingDays = ageInDays % 30;
+
+        // Dont alter if kinnda newish
+        if (ageInDays < 2) {
+          return;
+        }
+
+        // Determine the label for the document's age
+        let ageString = "";
+
+        if (ageInYears > 0) {
+          ageString = `${ageInYears} year${ageInYears > 1 ? "s" : ""} old`;
+        } else if (remainingMonths > 0) {
+          ageString = `${remainingMonths} month${remainingMonths > 1 ? "s" : ""} old`;
+        } else if (remainingDays > 0) {
+          ageString = `${remainingDays} day${remainingDays > 1 ? "s" : ""} old`;
+        }
+
+        // Add the age string to the #header element
+        const masthead = document.getElementById("masthead");
+        if (masthead && ageString) {
+          const ageElement = document.createElement("div");
+          ageElement.textContent = `(${ageString})`;
+          masthead.appendChild(ageElement);
+        }
+      })();
+      (function () {
+        const elements = document.querySelectorAll(".element");
+        const theaders = document.querySelectorAll("tbody th");
+
+        function toggleHighlight(story, isHighlight) {
+          elements.forEach((el) => {
+            if (el.getAttribute("data-story") === story) {
+              el.classList.toggle("highlight", isHighlight);
+            }
+          });
+        }
+
+        // Click/Hover elements
+        elements.forEach((ele) => {
+          ele.addEventListener("mouseover", () =>
+            toggleHighlight(ele.getAttribute("data-story"), true),
+          );
+          ele.addEventListener("mouseout", () =>
+            toggleHighlight(ele.getAttribute("data-story"), false),
+          );
+
+          const tooltipText = document.createElement("span");
+          tooltipText.className = "tooltip-text";
+
+          const e_type = ele.getAttribute("data-type");
+          const e_flat = ele.getAttribute("data-flat");
+          const e_pages = ele.getAttribute("data-pages");
+          const e_total = ele.getAttribute("data-tpages");
+          const e_desc = ele.getAttribute("data-desc");
+          const e_story = ele.getAttribute("data-story");
+          const e_flatcount = ele.getAttribute("data-flatcount");
+          const e_tip =
+            e_type == "major"
+              ? `<strong>~${e_pages}</strong>${e_flatcount > 1 ? "/" + e_total + "pp on flat " + e_flat : "pp"}`
+              : `${e_desc}`;
+          tooltipText.innerHTML = `<span style="--item-color:var(--color${e_story});" class="${e_type}-tip">${e_tip}</span>`;
+
+          document.body.appendChild(tooltipText);
+
+          ele.addEventListener("mouseenter", () => {
+            tooltipText.style.visibility = "visible";
+            tooltipText.style.opacity = "1";
+          });
+
+          ele.addEventListener("mouseleave", () => {
+            tooltipText.style.visibility = "hidden";
+            tooltipText.style.opacity = "0";
+          });
+
+          ele.addEventListener("mousemove", (e) => {
+            tooltipText.style.left = `${e.pageX + 5}px`;
+            tooltipText.style.top = `${e.pageY + 5}px`;
+          });
+        });
+
+        // Click table headers
+        theaders.forEach((header) => {
+          header.addEventListener("mouseover", () =>
+            toggleHighlight(
+              header.parentElement.getAttribute("data-story"),
+              true,
+            ),
+          );
+          header.addEventListener("mouseout", () =>
+            toggleHighlight(
+              header.parentElement.getAttribute("data-story"),
+              false,
+            ),
+          );
+
+          header.addEventListener("click", async () => {
+            dataStory = header.parentElement.getAttribute("data-story");
+            elements.forEach((ele) => {
+              if (ele.getAttribute("data-story") === dataStory) {
+                ele.scrollIntoView({ behavior: "smooth" });
+                return;
+              }
+            });
+            elements.forEach((ele) => {
+              if (ele.getAttribute("data-story") === dataStory) {
+                if (ele.getAttribute("data-type") == "minor") {
+                  const page = ele.closest(".flat");
+                  page.classList.remove("pulse2");
+                  void page.offsetWidth; // force reflow
+                  page.classList.add("pulse2");
+                }
+                ele.classList.remove("pulse");
+                void ele.offsetWidth; //force reflow
+                ele.classList.add("pulse");
+              }
+            });
+          });
+        });
+      })();
+      (function () {
+        const tables = [
+          document.getElementById("article-table"),
+          document.getElementById("extra-table"),
+        ];
+        tables.forEach((table) => {
+          if (table) {
+            new SearchableTable(table);
+            new SortableTable(table);
+          }
+        });
+      })();
+      (function () {
+        function toggleTheme() {
+          // Toggle the 'light-theme' class on the body element
+          document.body.classList.toggle("light-theme");
+
+          // Change the icon based on the current theme
+          const button = document.getElementById("theme-toggle-btn");
+          button.textContent = document.body.classList.contains("light-theme")
+            ? "💡"
+            : "🌙";
+        }
+
+        const button = document.createElement("button");
+        button.id = "theme-toggle-btn";
+        button.textContent = "🌙";
+        button.className = "toggle-btn";
+        button.onclick = toggleTheme;
+        document.getElementById("masthead").appendChild(button);
+      })();
+    </script>
+  </body>
+</html>
