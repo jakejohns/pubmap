@@ -17,7 +17,7 @@ $ make install
 see `Makefile` for info.
 
 **note**: make sure that `$XDG_DATA_HOME/bin` (default: `~/.local/bin/`) is in
-`PATH`. (edit `~/.bashrc`, `~/.zshrc`, etc. eg. `EXPORT PATH="$PATH:$HOME/.local/bin/"`)
+`PATH`. (edit `~/.bashrc`, `~/.zshrc`, etc. and add `EXPORT PATH="$PATH:$HOME/.local/bin/"`)
 
 ## Usage
 
