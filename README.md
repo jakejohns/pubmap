@@ -9,6 +9,8 @@ Create simple HTML dummy pages from a CSV for print production planning.
 Clone repo, and run `make install` in the project directory.
 
 ```
+$ git clone https://github.com/jakejohns/pubmap.git
+$ cd pubmap
 $ make install
 ```
 
