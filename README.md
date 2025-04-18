@@ -29,6 +29,13 @@ $ pubmap < pubmap.csv > pubmap.html
 
 ### Options
 
+Set options on the command line using the following flags. eg. to set the name
+of the project you can use:
+
+```sh
+pubmap --name "My Publication No. 1337" < pubmap.csv > pubmap.html
+```
+
 | option   | description                                           |
 | -------- | ----------------------------------------------------- |
 | `--name` | set name of publication                               |
@@ -102,6 +109,13 @@ example, the top level of your publication project directory (eg.
 `/mnt/server/pubs/my-pub-1337/pubmap.cfg`). This file can define the basic attributes
 of you project, and you can use the `pubmap update` command to update a map
 based on the setting is in this file.
+
+For example, to update a map in an directory configured as a "pubmap project":
+
+```
+$ cd /server/pubs/my-pub-1337
+$ pubmap update
+```
 
 ### `pubmap.cfg`
 
