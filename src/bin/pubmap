@@ -154,6 +154,19 @@ while :; do
     shift
 done
 
+if [[ "$1" == "update" ]]; then
+    csv=${PUBMAP_CSV:-"pubmap.csv"}
+    if [[ -f $csv ]]; then
+        [[ -n "$NAME" ]] || NAME="$(basename "$csv")"
+        PUBMAP_OUTPUT=${PUBMAP_OUTPUT:-"pubmap.html"}
+        [[ -f "$PUBMAP_OUTPUT" ]] && cp "$PUBMAP_OUTPUT" "$PUBMAP_OUTPUT.bak"
+        load < "$csv" && output > "$PUBMAP_OUTPUT" && info "$PUBMAP_OUTPUT updated"
+        exit
+    else
+        die "No pubmap.csv"
+    fi
+fi
+
 if [[ -t 0 ]]; then
     csv=$1
     [[ -n $csv ]] || csv=${PUBMAP_CSV:-"pubmap.csv"}
@@ -162,9 +175,10 @@ if [[ -t 0 ]]; then
 
         if [[ -n "$PUBMAP_OUTPUT" ]]; then
             [[ -f "$PUBMAP_OUTPUT" ]] && cp --interactive "$PUBMAP_OUTPUT" "$PUBMAP_OUTPUT.bak"
-            load < "$csv" && output > "$PUBMAP_OUTPUT"; exit
+            load < "$csv" && output > "$PUBMAP_OUTPUT" && info "$PUBMAP_OUTPUT updated"
+            exit
         else
-            output < "$csv" ; exit
+            load < "$csv" && output ; exit
         fi
     else
         die "No pubmap.csv"
