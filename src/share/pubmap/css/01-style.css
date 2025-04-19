@@ -447,6 +447,16 @@ table .flatlink:focus {
   text-align: center;
 }
 
+.bev .double {
+  display: flex;
+  justify-content: space-around;
+  opacity: 0.75;
+}
+
+.bev .team {
+  opacity: 0.5;
+}
+
 .bev .two-person {
   min-width: 10em;
 }
