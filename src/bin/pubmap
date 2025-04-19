@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+__VERSION__=0.0.0
+
 PUBMAP_CFG=${PUBMAP_CFG:-pubmap.cfg}
 
 show_help() {
@@ -124,7 +126,7 @@ output() {
 while :; do
     case $1 in
         -h|-\?|--help) show_help; exit; ;;
-        -v|--verbose) verbose=$((verbose + 1)) ;;
+        -v|--version) printf '%s\n' "$__VERSION__" ; exit; ;;
         -d|--dump) DUMP=true; ;;
 
         --no-map) PRINT_MAP=false; ;;
