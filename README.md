@@ -67,7 +67,7 @@ Metacharacters alter element behavior.
 | `[` or `]` | **Open/Close Split**: inner elements share a row (nested Split reverts to stacking). |
 | `<` or `>` | **Inset Corner**: place element at bottom left/right.                                |
 |    `^`     | **Inset Top**: place element at top instead.                                         |
-|    `*`     | **Extra**: don't consder elment in manuscript page calculations or tracking.         |
+|    `*`     | **Extra**: don't consder element in manuscript page calculations or tracking.        |
 |    `#`     | **Note**: add description to extra element.                                          |
 
 #### Example
