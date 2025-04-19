@@ -4,6 +4,10 @@ Create simple HTML dummy pages from a CSV for print production planning.
 
 ![screenshot](docs/screenshot/example.png)
 
+See [example][example] in [docs/example](docs/example/)
+
+[example]: https://html-preview.github.io/?url=https://github.com/jakejohns/pubmap/blob/main/docs/example/pubmap.html
+
 ## Install
 
 Clone repo, and run `make install` in the project directory.
